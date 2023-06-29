@@ -2,20 +2,20 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   annotations:
-    build.appstudio.openshift.io/repo: https://github.com/redhat-appstudio-qe/spi-oauth-redirect-proxy?rev={{revision}}
+    build.appstudio.openshift.io/repo: https://github.com/albarbaro/spi-oauth-redirect-proxy?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/pull_request_number: '{{pull_request_number}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-event: '[pull_request]'
-    pipelinesascode.tekton.dev/on-target-branch: '[main]'
+    pipelinesascode.tekton.dev/on-target-branch: '[test-staging]'
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: spi-oauth-redirect-proxy
+    appstudio.openshift.io/application: spi-oauth-redirect-proxy-staging
     appstudio.openshift.io/component: spi-oauth-redirect-proxy
     pipelines.appstudio.openshift.io/type: build
   name: spi-oauth-redirect-proxy-on-pull-request
-  namespace: rhtap-qe-shared-tenant
+  namespace: rh-ee-abarbaro-tenant
 spec:
   params:
   - name: dockerfile
@@ -25,7 +25,7 @@ spec:
   - name: image-expires-after
     value: 5d
   - name: output-image
-    value: quay.io/redhat-user-workloads/rhtap-qe-shared-tenant/spi-oauth-redirect-proxy/spi-oauth-redirect-proxy:on-pr-{{revision}}
+    value: quay.io/redhat-user-workloads-stage/rh-ee-abarbaro-tenant/spi-oauth-redirect-proxy-staging/spi-oauth-redirect-proxy:on-pr-{{revision}}
   - name: path-context
     value: .
   - name: revision
